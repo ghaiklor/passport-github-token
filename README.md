@@ -1,6 +1,13 @@
 # passport-github-token
 
-![Build Status](https://img.shields.io/travis/ghaiklor/passport-github-token.svg) ![Coverage](https://img.shields.io/coveralls/ghaiklor/passport-github-token.svg) ![Downloads](https://img.shields.io/npm/dm/passport-github-token.svg) ![npm version](https://img.shields.io/npm/v/passport-github-token.svg) ![dependencies](https://img.shields.io/david/ghaiklor/passport-github-token.svg) ![dev dependencies](https://img.shields.io/david/dev/ghaiklor/passport-github-token.svg) ![License](https://img.shields.io/npm/l/passport-github-token.svg)
+![Build Status](https://img.shields.io/travis/ghaiklor/passport-github-token.svg)
+![Coverage](https://img.shields.io/coveralls/ghaiklor/passport-github-token.svg)
+![Downloads](https://img.shields.io/npm/dm/passport-github-token.svg)
+![Downloads](https://img.shields.io/npm/dt/passport-github-token.svg)
+![npm version](https://img.shields.io/npm/v/passport-github-token.svg)
+![dependencies](https://img.shields.io/david/ghaiklor/passport-github-token.svg)
+![dev dependencies](https://img.shields.io/david/dev/ghaiklor/passport-github-token.svg)
+![License](https://img.shields.io/npm/l/passport-github-token.svg)
 
 [Passport](http://passportjs.org/) strategy for authenticating with GitHub access tokens using the OAuth 2.0 API.
 
@@ -21,6 +28,8 @@ The GitHub authentication strategy authenticates users using a GitHub account an
 The strategy requires a `verify` callback, which accepts these credentials and calls `next` providing a user, as well as `options` specifying a app ID and app secret.
 
 ```javascript
+var GitHubTokenStrategy = require('passport-github-token');
+
 passport.use(new GitHubTokenStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
@@ -57,7 +66,11 @@ module.exports = {
 };
 ```
 
-The POST request to this route should include a JSON object with the keys `access_token` and optionally, `refresh_token` set to the credentials you receive from GitHub.
+The request to this route should include a GET or POST data with the keys `access_token` and optionally, `refresh_token` set to the credentials you receive from GitHub.
+
+```
+GET /auth/github?access_token=<TOKEN>
+```
 
 ## Issues
 
