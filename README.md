@@ -2,12 +2,16 @@
 
 ![Build Status](https://img.shields.io/travis/ghaiklor/passport-github-token.svg)
 ![Coverage](https://img.shields.io/coveralls/ghaiklor/passport-github-token.svg)
+
 ![Downloads](https://img.shields.io/npm/dm/passport-github-token.svg)
 ![Downloads](https://img.shields.io/npm/dt/passport-github-token.svg)
 ![npm version](https://img.shields.io/npm/v/passport-github-token.svg)
+![License](https://img.shields.io/npm/l/passport-github-token.svg)
+
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![dependencies](https://img.shields.io/david/ghaiklor/passport-github-token.svg)
 ![dev dependencies](https://img.shields.io/david/dev/ghaiklor/passport-github-token.svg)
-![License](https://img.shields.io/npm/l/passport-github-token.svg)
 
 [Passport](http://passportjs.org/) strategy for authenticating with GitHub access tokens using the OAuth 2.0 API.
 
