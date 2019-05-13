@@ -10,6 +10,7 @@ import { OAuth2Strategy, InternalOAuthError } from 'passport-oauth';
  * Options:
  * - clientID          Identifies client to GitHub App
  * - clientSecret      Secret used to establish ownership of the consumer key
+ * - scope             Scope to get user's private emails
  * - passReqToCallback If need, pass req to verify callback
  *
  * @param {Object} _options
@@ -17,7 +18,8 @@ import { OAuth2Strategy, InternalOAuthError } from 'passport-oauth';
  * @example
  * passport.use(new GitHubTokenStrategy({
  *   clientID: '123456789',
- *   clientSecret: 'shhh-its-a-secret'
+ *   clientSecret: 'shhh-its-a-secret',
+ *   scope: 'user:email',
  * }), function(accessToken, refreshToken, profile, next) {
  *   User.findOrCreate({githubId: profile.id}, function(error, user) {
  *     next(error, user);
@@ -89,9 +91,11 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
         }
       }
 
+      let profile = {};
+
       try {
         let json = JSON.parse(body);
-        let profile = {
+        profile = {
           provider: 'github',
           id: json.id,
           username: json.login,
@@ -100,15 +104,45 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
             familyName: json.name ? json.name.split(' ', 2)[1] || '' : '',
             givenName: json.name ? json.name.split(' ', 2)[0] || '' : ''
           },
-          emails: [{value: json.email || ''}],
+          emails: json.email && [{value: json.email}],
           photos: [],
           _raw: body,
           _json: json
         };
-
-        return done(null, profile);
       } catch (e) {
         return done(e);
+      }
+
+      if (this._scope && this._scope.indexOf('user:email') !== -1) {
+        this._oauth2._request('GET', this._profileURL + '/emails', { 'Accept': 'application/vnd.github.v3+json' }, '', accessToken, function(error, body, res) {
+          if (error) return done(null, profile);
+
+          var json;
+          try {
+            json = JSON.parse(body);
+          } catch (_) {
+            return done(null, profile);
+          }
+
+          if (!json.length) return done(null, profile);
+
+          profile.emails = profile.emails || [];
+          var publicEmail = profile.emails[0];
+
+          (json).forEach(function(email) {
+            if (publicEmail && publicEmail.value == email.email) {
+              profile.emails[0].primary = email.primary;
+              profile.emails[0].verified = email.verified;
+            } else {
+              profile.emails.push({ value: email.email, primary: email.primary, verified: email.verified })
+            }
+          });
+
+          done(null, profile);
+        });
+      }
+      else {
+        done(null, profile);
       }
     });
   }
