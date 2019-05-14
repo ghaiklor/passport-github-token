@@ -8,6 +8,8 @@ notifications:
 node_js:
   - stable
   - "lts/*"
+script:
+  - npm run test
 after_success:
   - npm run coveralls
 branches:
