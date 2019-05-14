@@ -41,7 +41,7 @@ describe('GitHubTokenStrategy:authenticate', () => {
         return next(null, profile, {info: 'foo'});
       });
 
-      sinon.stub(strategy._oauth2, 'get', (url, accessToken, next) => next(null, fakeProfile, null));
+      sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, next) => next(null, fakeProfile, null));
     });
 
     it('Should properly parse token from body', done => {
@@ -103,7 +103,7 @@ describe('GitHubTokenStrategy:authenticate', () => {
         return next(null, profile, {info: 'foo'});
       });
 
-      sinon.stub(strategy._oauth2, 'get', (url, accessToken, next) => next(null, fakeProfile, null));
+      sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, next) => next(null, fakeProfile, null));
     });
 
     it('Should properly call _verify with req', done => {
@@ -129,7 +129,7 @@ describe('GitHubTokenStrategy:userProfile', () => {
   it('Should properly fetch profile', done => {
     let strategy = new GitHubTokenStrategy(STRATEGY_CONFIG, BLANK_FUNCTION);
 
-    sinon.stub(strategy._oauth2, 'get', (url, accessToken, next) => next(null, fakeProfile, null));
+    sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, next) => next(null, fakeProfile, null));
 
     strategy.userProfile('accessToken', (error, profile) => {
       if (error) return done(error);
@@ -151,7 +151,7 @@ describe('GitHubTokenStrategy:userProfile', () => {
   it('Should properly handle exception on fetching profile', done => {
     let strategy = new GitHubTokenStrategy(STRATEGY_CONFIG, BLANK_FUNCTION);
 
-    sinon.stub(strategy._oauth2, 'get', (url, accessToken, done) => done(null, 'not a JSON', null));
+    sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, done) => done(null, 'not a JSON', null));
 
     strategy.userProfile('accessToken', (error, profile) => {
       assert(error instanceof SyntaxError);
@@ -163,7 +163,7 @@ describe('GitHubTokenStrategy:userProfile', () => {
   it('Should properly handle wrong JSON on fetching profile', done => {
     let strategy = new GitHubTokenStrategy(STRATEGY_CONFIG, BLANK_FUNCTION);
 
-    sinon.stub(strategy._oauth2, 'get', (url, accessToken, done) => done(new Error('ERROR'), 'not a JSON', null));
+    sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, done) => done(new Error('ERROR'), 'not a JSON', null));
 
     strategy.userProfile('accessToken', (error, profile) => {
       assert.instanceOf(error, Error);
@@ -175,7 +175,7 @@ describe('GitHubTokenStrategy:userProfile', () => {
   it('Should properly handle wrong JSON on fetching profile', done => {
     let strategy = new GitHubTokenStrategy(STRATEGY_CONFIG, BLANK_FUNCTION);
 
-    sinon.stub(strategy._oauth2, 'get', (url, accessToken, done) => done({
+    sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, done) => done({
       data: JSON.stringify({
         error: {
           message: 'MESSAGE',
