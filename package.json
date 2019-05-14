@@ -1,6 +1,6 @@
 {
   "name": "passport-github-token",
-  "version": "0.0.0-semantic-release",
+  "version": "2.1.0",
   "description": "Passport strategy for authenticating with GitHub via OAuth2 access tokens",
   "main": "lib/index.js",
   "scripts": {
