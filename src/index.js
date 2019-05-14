@@ -55,7 +55,7 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
     let accessToken = (req.body && req.body[this._accessTokenField]) || (req.query && req.query[this._accessTokenField]);
     let refreshToken = (req.body && req.body[this._refreshTokenField]) || (req.query && req.query[this._refreshTokenField]);
 
-    if (!accessToken) return this.fail({message: `You should provide ${this._accessTokenField}`});
+    if (!accessToken) return this.fail({ message: `You should provide ${this._accessTokenField}` });
 
     this._loadUserProfile(accessToken, (error, profile) => {
       if (error) return this.error(error);
@@ -104,7 +104,7 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
             familyName: json.name ? json.name.split(' ', 2)[1] || '' : '',
             givenName: json.name ? json.name.split(' ', 2)[0] || '' : ''
           },
-          emails: json.email && [{value: json.email}],
+          emails: json.email && [{ value: json.email }],
           photos: [],
           _raw: body,
           _json: json
@@ -114,7 +114,7 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
       }
 
       if (this._scope && this._scope.indexOf('user:email') !== -1) {
-        this._oauth2._request('GET', this._profileURL + '/emails', { 'Accept': 'application/vnd.github.v3+json' }, '', accessToken, function(error, body, res) {
+        this._oauth2._request('GET', this._profileURL + '/emails', { 'Accept': 'application/vnd.github.v3+json' }, '', accessToken, function (error, body, res) {
           if (error) return done(null, profile);
 
           var json;
@@ -129,7 +129,7 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
           profile.emails = profile.emails || [];
           var publicEmail = profile.emails[0];
 
-          (json).forEach(function(email) {
+          (json).forEach(function (email) {
             if (publicEmail && publicEmail.value == email.email) {
               profile.emails[0].primary = email.primary;
               profile.emails[0].verified = email.verified;

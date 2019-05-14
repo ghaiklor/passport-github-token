@@ -2,3 +2,4 @@
 --require ./test/bootstrap.js
 --reporter nyan
 --recursive
+--exit
