@@ -114,7 +114,7 @@ export default class GitHubTokenStrategy extends OAuth2Strategy {
       }
 
       if (this._scope && this._scope.indexOf('user:email') !== -1) {
-        this._oauth2._request('GET', this._profileURL + '/emails', { 'Accept': 'application/vnd.github.v3+json' }, '', accessToken, function (error, body, res) {
+        this._oauth2.get(this._profileURL + '/emails', accessToken, function (error, body, res) {
           if (error) return done(null, profile);
 
           var json;
