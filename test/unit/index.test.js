@@ -1,14 +1,13 @@
-import chai, { assert } from 'chai';
-import sinon from 'sinon';
-import GitHubTokenStrategy from '../../src/index';
-import fakeProfile from '../fixtures/profile';
+const chai = require('chai');
+const { assert } = require('chai');
+const sinon = require('sinon');
+const GitHubTokenStrategy = require('../..');
+const fakeProfile = require('../fixtures/profile');
 
+const BLANK_FUNCTION = () => { };
 const STRATEGY_CONFIG = {
   clientID: '123',
   clientSecret: '123'
-};
-
-const BLANK_FUNCTION = () => {
 };
 
 describe('GitHubTokenStrategy:init', () => {
@@ -38,7 +37,7 @@ describe('GitHubTokenStrategy:authenticate', () => {
         assert.equal(refreshToken, 'refresh_token');
         assert.typeOf(profile, 'object');
         assert.typeOf(next, 'function');
-        return next(null, profile, {info: 'foo'});
+        return next(null, profile, { info: 'foo' });
       });
 
       sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, next) => next(null, fakeProfile, null));
@@ -49,7 +48,7 @@ describe('GitHubTokenStrategy:authenticate', () => {
         .success((user, info) => {
           assert.typeOf(user, 'object');
           assert.typeOf(info, 'object');
-          assert.deepEqual(info, {info: 'foo'});
+          assert.deepEqual(info, { info: 'foo' });
           done();
         })
         .req(req => {
@@ -66,7 +65,7 @@ describe('GitHubTokenStrategy:authenticate', () => {
         .success((user, info) => {
           assert.typeOf(user, 'object');
           assert.typeOf(info, 'object');
-          assert.deepEqual(info, {info: 'foo'});
+          assert.deepEqual(info, { info: 'foo' });
           done();
         })
         .req(req => {
@@ -94,13 +93,13 @@ describe('GitHubTokenStrategy:authenticate', () => {
     let strategy;
 
     before(() => {
-      strategy = new GitHubTokenStrategy(Object.assign(STRATEGY_CONFIG, {passReqToCallback: true}), (req, accessToken, refreshToken, profile, next) => {
+      strategy = new GitHubTokenStrategy(Object.assign(STRATEGY_CONFIG, { passReqToCallback: true }), (req, accessToken, refreshToken, profile, next) => {
         assert.typeOf(req, 'object');
         assert.equal(accessToken, 'access_token');
         assert.equal(refreshToken, 'refresh_token');
         assert.typeOf(profile, 'object');
         assert.typeOf(next, 'function');
-        return next(null, profile, {info: 'foo'});
+        return next(null, profile, { info: 'foo' });
       });
 
       sinon.stub(strategy._oauth2, 'get').callsFake((url, accessToken, next) => next(null, fakeProfile, null));
@@ -111,7 +110,7 @@ describe('GitHubTokenStrategy:authenticate', () => {
         .success((user, info) => {
           assert.typeOf(user, 'object');
           assert.typeOf(info, 'object');
-          assert.deepEqual(info, {info: 'foo'});
+          assert.deepEqual(info, { info: 'foo' });
           done();
         })
         .req(req => {
@@ -139,7 +138,7 @@ describe('GitHubTokenStrategy:userProfile', () => {
       assert.equal(profile.displayName, 'Eugene Obrezkov');
       assert.equal(profile.name.familyName, 'Obrezkov');
       assert.equal(profile.name.givenName, 'Eugene');
-      assert.deepEqual(profile.emails, [{value: 'ghaiklor@gmail.com'}]);
+      assert.deepEqual(profile.emails, [{ value: 'ghaiklor@gmail.com' }]);
       assert.deepEqual(profile.photos, []);
       assert.equal(typeof profile._raw, 'string');
       assert.equal(typeof profile._json, 'object');

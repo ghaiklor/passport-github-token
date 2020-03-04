@@ -1,17 +1,6 @@
-sudo: false
 language: node_js
-cache:
-  directories:
-    - node_modules
-notifications:
-  email: true
 node_js:
   - stable
   - "lts/*"
-script:
-  - npm run test
 after_success:
   - npm run coveralls
-branches:
-  except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"

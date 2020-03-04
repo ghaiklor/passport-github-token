@@ -2,12 +2,10 @@
   "name": "passport-github-token",
   "version": "2.2.0",
   "description": "Passport strategy for authenticating with GitHub via OAuth2 access tokens",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "compile": "babel src --out-dir lib",
     "coveralls": "cat coverage/lcov.info | coveralls",
-    "prepare": "npm run compile",
-    "test": "babel-node ./node_modules/.bin/isparta cover _mocha"
+    "test": "isparta cover _mocha"
   },
   "repository": {
     "type": "git",
@@ -20,6 +18,9 @@
     "auth",
     "authentication"
   ],
+  "files": [
+    "src"
+  ],
   "author": "ghaiklor",
   "license": "MIT",
   "bugs": {
@@ -30,21 +31,12 @@
     "passport-oauth": "1.0.0"
   },
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-plugin-add-module-exports": "1.0.2",
-    "babel-preset-es2015": "6.24.1",
     "chai": "4.2.0",
     "chai-passport-strategy": "1.0.1",
-    "coveralls": "3.0.8",
-    "cz-conventional-changelog": "3.1.0",
+    "coveralls": "3.0.9",
     "isparta": "4.1.1",
     "mocha": "7.1.0",
     "sinon": "9.0.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "publishConfig": {
     "tag": "latest"

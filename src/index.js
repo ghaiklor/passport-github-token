@@ -1,4 +1,4 @@
-import { OAuth2Strategy, InternalOAuthError } from 'passport-oauth';
+const { OAuth2Strategy, InternalOAuthError } = require('passport-oauth');
 
 /**
  * `Strategy` constructor.
@@ -26,7 +26,7 @@ import { OAuth2Strategy, InternalOAuthError } from 'passport-oauth';
  *   })
  * })
  */
-export default class GitHubTokenStrategy extends OAuth2Strategy {
+module.exports = class GitHubTokenStrategy extends OAuth2Strategy {
   constructor(_options, _verify) {
     let options = _options || {};
     let verify = _verify;

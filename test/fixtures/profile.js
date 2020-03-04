@@ -1,4 +1,4 @@
-export default JSON.stringify({
+module.exports = JSON.stringify({
   "login": "ghaiklor",
   "id": 1,
   "name": "Eugene Obrezkov",

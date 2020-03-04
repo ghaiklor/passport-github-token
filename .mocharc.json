@@ -1,0 +1,7 @@
+{
+  "spec": "./test/unit/**/*.test.js",
+  "require": "./test/bootstrap.js",
+  "reporter": "spec",
+  "recursive": true,
+  "exit": true
+}
